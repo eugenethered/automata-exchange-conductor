@@ -14,8 +14,10 @@ class ExchangeConductor:
         self.handler = handler
 
     def get_instrument_exchanges(self):
+        instrument_exchanges_holder = self.handler.obtain_holder()
         exchange_instruments_payload = self.data_provider.fetch_exchange_instruments()
-        logging.info(f'Obtained raw exchange instruments[{len(exchange_instruments_payload)}]')
+        logging.info(f'Fetched raw exchange instruments[{len(exchange_instruments_payload)}]')
         for exchange_instrument_data in exchange_instruments_payload:
             instrument_exchange = self.transformer.transform(exchange_instrument_data)
-            self.handler.handle_instrument_exchange(instrument_exchange)
+            instrument_exchanges_holder.add(instrument_exchange)
+        self.handler.update_holder(instrument_exchanges_holder)
