@@ -19,19 +19,18 @@ class ExchangeTransformer:
         self.market = market
         self.repository = repository
         self.data_extractor = data_extractor
+        self.transformations = self.load_transformations()
         self.config_reporter = ConfigReporterHolder()
         self.config_reporter.set_ignored_check_func(self.missing_ignore_check)
 
     def missing_ignore_check(self, missing: Missing):
-        transformations = self.repository.retrieve()
-        ignored_instruments = list([transform.instrument for transform in transformations if transform.ignore is True])
+        ignored_instruments = list([k for k, t in self.transformations.items() if t.ignore is True])
         return False if len(ignored_instruments) == 0 else missing.missing in ignored_instruments
-    
+
     def transform(self, exchange_instrument_data) -> Optional[InstrumentExchange]:
-        transformations = self.load_transformations()
         raw_instrument = self.data_extractor.extract(exchange_instrument_data)
-        if raw_instrument in transformations:
-            exchange_transformation = transformations[raw_instrument]
+        if raw_instrument in self.transformations:
+            exchange_transformation = self.transformations[raw_instrument]
             return self.transform_to_instrument_exchange(exchange_transformation)
         else:
             self.report_missing_instrument_exchange(raw_instrument)
