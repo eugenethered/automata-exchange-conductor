@@ -19,5 +19,7 @@ class ExchangeConductor:
         logging.info(f'Fetched raw exchange instruments[{len(exchange_instruments_payload)}]')
         for exchange_instrument_data in exchange_instruments_payload:
             instrument_exchange = self.transformer.transform(exchange_instrument_data)
-            instrument_exchanges_holder.add(instrument_exchange)
+            if instrument_exchange is not None:
+                logging.debug(f'Adding transformed instrument exchange:{instrument_exchange}')
+                instrument_exchanges_holder.add(instrument_exchange)
         self.handler.update_holder(instrument_exchanges_holder)
