@@ -5,10 +5,10 @@ from config.report.holder.ConfigReporterHolder import ConfigReporterHolder
 from core.exchange.InstrumentExchange import InstrumentExchange
 from core.market.Market import Market
 from core.missing.Context import Context
+from coreutility.collection.dictionary_utility import as_data
 from exchangetransformrepo.ExchangeTransform import ExchangeTransform
 from exchangetransformrepo.repository.ExchangeTransformRepository import ExchangeTransformRepository
 from missingrepo.Missing import Missing
-from utility.json_utility import as_data
 
 from conductor.extractor.DataExtractor import DataExtractor
 
