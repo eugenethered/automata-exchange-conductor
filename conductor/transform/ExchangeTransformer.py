@@ -16,6 +16,7 @@ from conductor.extractor.DataExtractor import DataExtractor
 class ExchangeTransformer:
 
     def __init__(self, market: Market, repository: ExchangeTransformRepository, data_extractor: DataExtractor):
+        self.log = logging.getLogger('ExchangeTransformer')
         self.market = market
         self.repository = repository
         self.data_extractor = data_extractor
@@ -58,6 +59,6 @@ class ExchangeTransformer:
 
     def report_missing_instrument_exchange(self, raw_instrument):
         def log_missing():
-            logging.warning(f'No transformation for raw instrument:{raw_instrument}')
+            self.log.warning(f'No transformation for raw instrument:{raw_instrument}')
         missing = Missing(raw_instrument, Context.EXCHANGE, self.market, f'Missing instrument:[{raw_instrument}]')
         self.config_reporter.report_missing(missing, log_missing)
