@@ -8,7 +8,7 @@ from conductor.transform.ExchangeTransformer import ExchangeTransformer
 class ExchangeConductor:
 
     def __init__(self, options, transformer: ExchangeTransformer, data_provider: ExchangeDataProvider, handler: InstrumentExchangeHandler):
-        self.log = logging.getLogger('ExchangeConductor')
+        self.log = logging.getLogger(__name__)
         self.options = options
         self.transformer = transformer
         self.data_provider = data_provider

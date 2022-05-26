@@ -3,7 +3,6 @@ from typing import List, Optional
 
 from config.report.holder.ConfigReporterHolder import ConfigReporterHolder
 from core.exchange.InstrumentExchange import InstrumentExchange
-from core.market.Market import Market
 from core.missing.Context import Context
 from coreutility.collection.dictionary_utility import as_data
 from exchangetransformrepo.ExchangeTransform import ExchangeTransform
@@ -15,7 +14,7 @@ from conductor.extractor.DataExtractor import DataExtractor
 
 class ExchangeTransformer:
 
-    def __init__(self, market: Market, repository: ExchangeTransformRepository, data_extractor: DataExtractor):
+    def __init__(self, market, repository: ExchangeTransformRepository, data_extractor: DataExtractor):
         self.log = logging.getLogger('ExchangeTransformer')
         self.market = market
         self.repository = repository
